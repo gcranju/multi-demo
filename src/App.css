@@ -36,3 +36,137 @@
     transform: rotate(360deg);
   }
 }
+body {
+  font-family: 'Comic Sans MS', cursive, sans-serif;
+}
+
+.navbar {
+  background-color: white;
+  border-bottom: 2px solid #333;
+}
+
+.navbar-brand {
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
+.nav-link, .navbar-brand, .dropdown-item {
+  color: #333 !important;
+}
+
+.dropdown-item:hover {
+  background-color: #f8f9fa;
+}
+
+.btn-outline-primary {
+  color: #333;
+  border-color: #333;
+}
+
+.btn-outline-primary:hover {
+  background-color: #333;
+  color: white;
+}
+
+.vertical-nav {
+  margin-top: 20px;
+  padding: 20px 0;
+}
+
+.vertical-nav .nav-link {
+  color: #333;
+  font-weight: bold;
+  margin: 10px 0;
+  padding: 10px 20px;
+  border-radius: 8px;
+  transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.vertical-nav .nav-link:hover {
+  background-color: #f8f9fa;
+}
+
+.vertical-nav .nav-link.active {
+  background-color: #e9ecef;
+  box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+}
+
+.card {
+  border-radius: 15px;
+}
+
+.card-title {
+  font-family: 'Comic Sans MS', cursive, sans-serif;
+  font-size: 1.5rem;
+  color: #333;
+}
+
+.form-label {
+  font-weight: bold;
+  color: #333;
+}
+
+.form-control.custom-input {
+  border-radius: 8px;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.form-control.custom-select {
+  border-radius: 8px;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.btn-primary {
+  background-color: #333;
+  border-color: #333;
+}
+
+.btn-primary:hover {
+  background-color: #555;
+  border-color: #555;
+}
+
+.input-group-text {
+  border-radius: 0 8px 8px 0;
+}
+
+.list-group-item {
+  border: none;
+  padding: 5px 10px;
+  background-color: #f8f9fa;
+  margin: 5px 0;
+  border-radius: 8px;
+}
+
+.table {
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+.table th, .table td {
+  vertical-align: middle;
+}
+
+.table-hover tbody tr:hover {
+  background-color: #f1f1f1;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.table-primary {
+  background-color: #e9ecef;
+}
+
+pre {
+  background-color: #f8f9fa;
+  padding: 10px;
+  border-radius: 8px;
+}
+
+@media (max-width: 768px) {
+  .vertical-nav {
+    display: none;
+  }
+}
