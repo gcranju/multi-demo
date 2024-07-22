@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { Navbar, Nav, NavDropdown, Button, Container, Row, Col } from 'react-bootstrap';
 import CreateProposal from './CreateProposal';
 import ApproveProposals from './ApproveProposals';
 import ExecuteProposals from './ExecuteProposals';
@@ -9,6 +8,7 @@ function CosmosPage({ context }) {
   const [selectedComponent, setSelectedComponent] = useState('approve-proposals');
   const [selectedChain, setSelectedChain] = useState('Archway');
   const [proposals, setProposals] = useState([]);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
 
   useEffect(() => {
     if (context === 'cosmos') {
@@ -45,65 +45,89 @@ function CosmosPage({ context }) {
 
   const handleChainChange = (chain) => {
     setSelectedChain(chain);
+    setDropdownOpen(false);
   };
 
   return (
     <div>
-      <Navbar bg="light" expand="lg" className="shadow-sm">
-        <Container>
-          <Navbar.Brand href="/">
-            MultiChainGov
-          </Navbar.Brand>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="ml-auto">
-              <NavDropdown title={`Chain: ${selectedChain}`} id="basic-nav-dropdown">
-                <NavDropdown.Item onClick={() => handleChainChange('Archway')}>Archway</NavDropdown.Item>
-                <NavDropdown.Item onClick={() => handleChainChange('Neutron')}>Neutron</NavDropdown.Item>
-                <NavDropdown.Item onClick={() => handleChainChange('Injective')}>Injective</NavDropdown.Item>
-              </NavDropdown>
-              <Button variant="outline-primary" className="ml-3">Wallet Address</Button>
-            </Nav>
-          </Navbar.Collapse>
-        </Container>
-      </Navbar>
-      <Container fluid>
-        <Row>
-          <Col md={2} className="d-none d-md-block bg-light vh-100 vertical-nav">
-            <Nav defaultActiveKey="approve-proposals" className="flex-column">
-            <Nav.Link
-                className={selectedComponent === 'create-proposal' ? 'active' : ''}
-                onClick={() => setSelectedComponent('create-proposal')}
+      <nav className="bg-white border-b-2 border-gray-800 shadow-sm">
+        <div className="container mx-auto flex justify-between items-center py-4">
+          <a href="/" className="font-bold text-lg text-gray-800">MultiChainGov</a>
+          <div className="flex items-center">
+            <div className="relative">
+              <button
+                className="text-gray-800"
+                onClick={() => setDropdownOpen(!dropdownOpen)}
               >
-                Create Proposal
-              </Nav.Link>
-              <Nav.Link
-                className={selectedComponent === 'approve-proposals' ? 'active' : ''}
-                onClick={() => setSelectedComponent('approve-proposals')}
-              >
-                Approve Proposals
-              </Nav.Link>
-              <Nav.Link
-                className={selectedComponent === 'execute-proposals' ? 'active' : ''}
-                onClick={() => setSelectedComponent('execute-proposals')}
-              >
-                Execute Proposals
-              </Nav.Link>
-              {context === 'cosmos' && (
-                <Nav.Link
-                  className={selectedComponent === 'executed-proposals' ? 'active' : ''}
-                  onClick={() => setSelectedComponent('executed-proposals')}
-                >
-                  Executed Proposals
-                </Nav.Link>
+                Chain: {selectedChain}
+              </button>
+              {dropdownOpen && (
+                <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg">
+                  <a
+                    href="#"
+                    onClick={() => handleChainChange('Archway')}
+                    className="block px-4 py-2 text-gray-800 hover:bg-gray-100"
+                  >
+                    Archway
+                  </a>
+                  <a
+                    href="#"
+                    onClick={() => handleChainChange('Neutron')}
+                    className="block px-4 py-2 text-gray-800 hover:bg-gray-100"
+                  >
+                    Neutron
+                  </a>
+                  <a
+                    href="#"
+                    onClick={() => handleChainChange('Injective')}
+                    className="block px-4 py-2 text-gray-800 hover:bg-gray-100"
+                  >
+                    Injective
+                  </a>
+                </div>
               )}
-            </Nav>
-          </Col>
-          <Col md={10} className="content">
-            {renderComponent()}
-          </Col>
-        </Row>
-      </Container>
+            </div>
+            <button className="ml-3 border border-gray-800 text-gray-800 px-3 py-2 rounded hover:bg-gray-800 hover:text-white">
+              Wallet Address
+            </button>
+          </div>
+        </div>
+      </nav>
+      <div className="flex">
+        <div className="hidden md:block w-1/5 bg-gray-100 h-screen p-4 border-r border-gray-300">
+          <nav className="flex flex-col space-y-4">
+            <button
+              className={`text-left py-2 px-4 rounded ${selectedComponent === 'create-proposal' ? 'bg-white bg-opacity-90 shadow' : 'hover:bg-gray-200'}`}
+              onClick={() => setSelectedComponent('create-proposal')}
+            >
+              Create Proposal
+            </button>
+            <button
+              className={`text-left py-2 px-4 rounded ${selectedComponent === 'approve-proposals' ? 'bg-white bg-opacity-90 shadow' : 'hover:bg-gray-200'}`}
+              onClick={() => setSelectedComponent('approve-proposals')}
+            >
+              Approve Proposals
+            </button>
+            <button
+              className={`text-left py-2 px-4 rounded ${selectedComponent === 'execute-proposals' ? 'bg-white bg-opacity-90 shadow' : 'hover:bg-gray-200'}`}
+              onClick={() => setSelectedComponent('execute-proposals')}
+            >
+              Execute Proposals
+            </button>
+            {context === 'cosmos' && (
+              <button
+                className={`text-left py-2 px-4 rounded ${selectedComponent === 'executed-proposals' ? 'bg-white bg-opacity-75 shadow' : 'hover:bg-gray-100'}`}
+                onClick={() => setSelectedComponent('executed-proposals')}
+              >
+                Executed Proposals
+              </button>
+            )}
+          </nav>
+        </div>
+        <div className="w-full md:w-4/5 p-4">
+          {renderComponent()}
+        </div>
+      </div>
     </div>
   );
 }

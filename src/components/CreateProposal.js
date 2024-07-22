@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Card, Form, Button, Row, Col, ListGroup, InputGroup } from 'react-bootstrap';
 
 function CreateProposal({ context }) {
   const [proposalType, setProposalType] = useState('member-management');
@@ -47,172 +46,213 @@ function CreateProposal({ context }) {
   };
 
   return (
-    <div className="container mt-5 d-flex justify-content-center">
-      <Card className="shadow-lg p-3 mb-5 bg-white rounded" style={{ width: '80%', height: '80%' }}>
-        <Card.Body>
-          <Card.Title>Create Proposal</Card.Title>
-          <Form onSubmit={handleSubmit}>
-            <Form.Group controlId="proposalType" className="mb-4">
-              <Form.Label>Proposal Type</Form.Label>
-              <Form.Control
-                as="select"
-                value={proposalType}
-                onChange={(e) => setProposalType(e.target.value)}
-                className="custom-select"
-              >
-                <option value="member-management">Member Management Proposal</option>
-                <option value="contract-upgrade">Contract Upgrade</option>
-              </Form.Control>
-            </Form.Group>
-            <hr />
-            {proposalType === 'member-management' && (
-              <>
-                {context === 'evm' ? (
-                  <>
-                    <Form.Group controlId="memberAddress" className="mb-3">
-                      <Form.Label>Member Address</Form.Label>
-                      <Form.Control
-                        type="text"
-                        placeholder="Enter member address"
-                        value={memberAddress}
-                        onChange={(e) => setMemberAddress(e.target.value)}
-                        className="custom-input"
-                      />
-                    </Form.Group>
-                    <Form.Group controlId="action" className="mb-3">
-                      <Form.Label>Action</Form.Label>
-                      <Form.Control
-                        as="select"
-                        value={action}
-                        onChange={(e) => setAction(e.target.value)}
-                        className="custom-select"
-                      >
-                        <option value="add">Add Member</option>
-                        <option value="remove">Remove Member</option>
-                      </Form.Control>
-                    </Form.Group>
-                    <Form.Group controlId="newThreshold" className="mb-3">
-                      <Form.Label>New Threshold</Form.Label>
-                      <Form.Control
-                        type="text"
-                        placeholder="Enter new threshold"
-                        value={newThreshold}
-                        onChange={(e) => setNewThreshold(e.target.value)}
-                        className="custom-input"
-                      />
-                    </Form.Group>
-                  </>
-                ) : (
-                  <>
-                    <Form.Group controlId="membersToAdd" className="mb-3">
-                      <Form.Label>Members to Add</Form.Label>
-                      <InputGroup>
-                        <Form.Control
-                          type="text"
-                          placeholder="Enter member address"
-                          value={membersToAdd}
-                          onChange={(e) => setMembersToAdd(e.target.value)}
-                          className="custom-input"
-                        />
-                        <Button variant="outline-secondary" onClick={handleAddMember}>+</Button>
-                      </InputGroup>
-                      <ListGroup className="mt-2">
-                        {membersToAddList.map((member, index) => (
-                          <ListGroup.Item key={index}>{member}</ListGroup.Item>
-                        ))}
-                      </ListGroup>
-                    </Form.Group>
-                    <Form.Group controlId="membersToRemove" className="mb-3">
-                      <Form.Label>Members to Remove</Form.Label>
-                      <InputGroup>
-                        <Form.Control
-                          type="text"
-                          placeholder="Enter member address"
-                          value={membersToRemove}
-                          onChange={(e) => setMembersToRemove(e.target.value)}
-                          className="custom-input"
-                        />
-                        <Button variant="outline-secondary" onClick={handleRemoveMember}>+</Button>
-                      </InputGroup>
-                      <ListGroup className="mt-2">
-                        {membersToRemoveList.map((member, index) => (
-                          <ListGroup.Item key={index}>{member}</ListGroup.Item>
-                        ))}
-                      </ListGroup>
-                    </Form.Group>
-                    <Form.Group controlId="newThreshold" className="mb-3">
-                      <Form.Label>New Threshold</Form.Label>
-                      <Form.Control
-                        type="text"
-                        placeholder="Enter new threshold"
-                        value={newThreshold}
-                        onChange={(e) => setNewThreshold(e.target.value)}
-                        className="custom-input"
-                      />
-                    </Form.Group>
-                  </>
-                )}
-              </>
-            )}
-            {proposalType === 'contract-upgrade' && (
-              <>
-                <Form.Group controlId="contractAddress" className="mb-3">
-                  <Form.Label>Contract Address</Form.Label>
-                  <Form.Control
-                    type="text"
-                    placeholder="Enter contract address"
-                    value={contractAddress}
-                    onChange={(e) => setContractAddress(e.target.value)}
-                    className="custom-input"
-                  />
-                </Form.Group>
-                {context === 'evm' && (
-                  <>
-                    <Form.Group controlId="proxyAdminAddress" className="mb-3">
-                      <Form.Label>Proxy Admin Address</Form.Label>
-                      <Form.Control
-                        type="text"
-                        placeholder="Enter proxy admin address"
-                        value={proxyAdminAddress}
-                        onChange={(e) => setProxyAdminAddress(e.target.value)}
-                        className="custom-input"
-                      />
-                    </Form.Group>
-                    <hr />
-                    <Form.Group controlId="implementationAddress" className="mb-3">
-                      <Form.Label>Implementation Address</Form.Label>
-                      <Form.Control
-                        type="text"
-                        placeholder="Enter implementation address"
-                        value={implementationAddress}
-                        onChange={(e) => setImplementationAddress(e.target.value)}
-                        className="custom-input"
-                      />
-                    </Form.Group>
-                  </>
-                )}
-                {context === 'cosmos' && (
-                  <Form.Group controlId="newCodeId" className="mb-3">
-                    <Form.Label>New Code ID</Form.Label>
-                    <Form.Control
+    <div className="flex justify-center items-start min-h-screen py-10">
+      <div className="bg-gray-50 shadow-lg rounded-lg w-4/5 h-4/5 p-8 overflow-auto">
+        <h2 className="text-2xl font-bold mb-5">Create Proposal</h2>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div className="mb-4">
+            <label htmlFor="proposalType" className="block text-sm font-medium text-gray-700">
+              Proposal Type
+            </label>
+            <select
+              id="proposalType"
+              value={proposalType}
+              onChange={(e) => setProposalType(e.target.value)}
+              className="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+            >
+              <option value="member-management">Member Management Proposal</option>
+              <option value="contract-upgrade">Contract Upgrade</option>
+            </select>
+          </div>
+          <hr />
+          {proposalType === 'member-management' && (
+            <>
+              {context === 'evm' ? (
+                <>
+                  <div className="mb-4">
+                    <label htmlFor="memberAddress" className="block text-sm font-medium text-gray-700">
+                      Member Address
+                    </label>
+                    <input
                       type="text"
-                      placeholder="Enter new code ID"
-                      value={newCodeId}
-                      onChange={(e) => setNewCodeId(e.target.value)}
-                      className="custom-input"
+                      id="memberAddress"
+                      placeholder="Enter member address"
+                      value={memberAddress}
+                      onChange={(e) => setMemberAddress(e.target.value)}
+                      className="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
                     />
-                  </Form.Group>
-                )}
-              </>
-            )}
-            <div className="d-flex justify-content-end">
-              <Button variant="primary" type="submit" className="mt-3">
-                Submit Proposal
-              </Button>
-            </div>
-          </Form>
-        </Card.Body>
-      </Card>
+                  </div>
+                  <div className="mb-4">
+                    <label htmlFor="action" className="block text-sm font-medium text-gray-700">
+                      Action
+                    </label>
+                    <select
+                      id="action"
+                      value={action}
+                      onChange={(e) => setAction(e.target.value)}
+                      className="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+                    >
+                      <option value="add">Add Member</option>
+                      <option value="remove">Remove Member</option>
+                    </select>
+                  </div>
+                  <div className="mb-4">
+                    <label htmlFor="newThreshold" className="block text-sm font-medium text-gray-700">
+                      New Threshold
+                    </label>
+                    <input
+                      type="text"
+                      id="newThreshold"
+                      placeholder="Enter new threshold"
+                      value={newThreshold}
+                      onChange={(e) => setNewThreshold(e.target.value)}
+                      className="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+                    />
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className="mb-4">
+                    <label htmlFor="membersToAdd" className="block text-sm font-medium text-gray-700">
+                      Members to Add
+                    </label>
+                    <div className="flex">
+                      <input
+                        type="text"
+                        id="membersToAdd"
+                        placeholder="Enter member address"
+                        value={membersToAdd}
+                        onChange={(e) => setMembersToAdd(e.target.value)}
+                        className="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+                      />
+                      <button
+                        type="button"
+                        onClick={handleAddMember}
+                        className="ml-2 bg-gray-400 text-white px-4 py-2 rounded-md hover:bg-gray-500"
+                      >
+                        +
+                      </button>
+                    </div>
+                    <ul className="mt-2 list-disc list-inside">
+                      {membersToAddList.map((member, index) => (
+                        <li key={index}>{member}</li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div className="mb-4">
+                    <label htmlFor="membersToRemove" className="block text-sm font-medium text-gray-700">
+                      Members to Remove
+                    </label>
+                    <div className="flex">
+                      <input
+                        type="text"
+                        id="membersToRemove"
+                        placeholder="Enter member address"
+                        value={membersToRemove}
+                        onChange={(e) => setMembersToRemove(e.target.value)}
+                        className="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+                      />
+                      <button
+                        type="button"
+                        onClick={handleRemoveMember}
+                        className="ml-2 bg-gray-400 text-white px-4 py-2 rounded-md hover:bg-gray-500"
+                      >
+                        +
+                      </button>
+                    </div>
+                    <ul className="mt-2 list-disc list-inside">
+                      {membersToRemoveList.map((member, index) => (
+                        <li key={index}>{member}</li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div className="mb-4">
+                    <label htmlFor="newThreshold" className="block text-sm font-medium text-gray-700">
+                      New Threshold
+                    </label>
+                    <input
+                      type="text"
+                      id="newThreshold"
+                      placeholder="Enter new threshold"
+                      value={newThreshold}
+                      onChange={(e) => setNewThreshold(e.target.value)}
+                      className="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+                    />
+                  </div>
+                </>
+              )}
+            </>
+          )}
+          {proposalType === 'contract-upgrade' && (
+            <>
+              <div className="mb-4">
+                <label htmlFor="contractAddress" className="block text-sm font-medium text-gray-700">
+                  Contract Address
+                </label>
+                <input
+                  type="text"
+                  id="contractAddress"
+                  placeholder="Enter contract address"
+                  value={contractAddress}
+                  onChange={(e) => setContractAddress(e.target.value)}
+                  className="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+                />
+              </div>
+              {context === 'evm' && (
+                <>
+                  <div className="mb-4">
+                    <label htmlFor="proxyAdminAddress" className="block text-sm font-medium text-gray-700">
+                      Proxy Admin Address
+                    </label>
+                    <input
+                      type="text"
+                      id="proxyAdminAddress"
+                      placeholder="Enter proxy admin address"
+                      value={proxyAdminAddress}
+                      onChange={(e) => setProxyAdminAddress(e.target.value)}
+                      className="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+                    />
+                  </div>
+                  <hr />
+                  <div className="mb-4">
+                    <label htmlFor="implementationAddress" className="block text-sm font-medium text-gray-700">
+                      Implementation Address
+                    </label>
+                    <input
+                      type="text"
+                      id="implementationAddress"
+                      placeholder="Enter implementation address"
+                      value={implementationAddress}
+                      onChange={(e) => setImplementationAddress(e.target.value)}
+                      className="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+                    />
+                  </div>
+                </>
+              )}
+              {context === 'cosmos' && (
+                <div className="mb-4">
+                  <label htmlFor="newCodeId" className="block text-sm font-medium text-gray-700">
+                    New Code ID
+                  </label>
+                  <input
+                    type="text"
+                    id="newCodeId"
+                    placeholder="Enter new code ID"
+                    value={newCodeId}
+                    onChange={(e) => setNewCodeId(e.target.value)}
+                    className="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+                  />
+                </div>
+              )}
+            </>
+          )}
+          <div className="flex justify-end">
+            <button type="submit" className="bg-black text-white px-4 py-2 rounded-md hover:bg-gray-500">
+              Submit Proposal
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }

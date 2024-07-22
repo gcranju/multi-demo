@@ -1,5 +1,4 @@
 import React from 'react';
-import { Table, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
 function ApproveProposals({ proposals, context }) {
@@ -8,74 +7,88 @@ function ApproveProposals({ proposals, context }) {
   };
 
   return (
-    <div className="container mt-5">
-      <h1>Approve Proposals</h1>
-      <Table striped bordered hover responsive className="shadow-sm mt-4">
-        <thead className="table-primary">
-          <tr>
-            {context === 'evm' ? (
-              <>
-                <th>Proposal Hash</th>
-                <th>Title</th>
-                <th>Status</th>
-                <th>Action</th>
-                <th>Details</th>
-              </>
-            ) : (
-              <>
-                <th>Proposal ID</th>
-                <th>Title</th>
-                <th>Proposer</th>
-                <th>Status</th>
-                <th>Expires At</th>
-                <th>Action</th>
-                <th>Details</th>
-              </>
-            )}
-          </tr>
-        </thead>
-        <tbody>
-          {proposals.map((proposal) => (
-            <tr key={proposal.id}>
+    <div className="container mx-auto mt-12">
+      <h1 className="text-2xl font-bold mb-6">Approve Proposals</h1>
+      <div className="overflow-x-auto shadow-sm rounded-lg">
+        <table className="min-w-full divide-y divide-gray-200">
+          <thead className="bg-gray-600 text-white">
+            <tr>
               {context === 'evm' ? (
                 <>
-                  <td>{proposal.hash}</td>
-                  <td>{proposal.title}</td>
-                  <td>{proposal.status}</td>
-                  <td>
-                    <Button variant="success" onClick={() => handleApprove(proposal.id)}>
-                      Approve
-                    </Button>
-                  </td>
-                  <td>
-                    <Link to={`/${context}/proposal/${proposal.hash}`} className="btn btn-info">
-                      Details
-                    </Link>
-                  </td>
+                  <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Proposal Hash</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Title</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Status</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Action</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Details</th>
                 </>
               ) : (
                 <>
-                  <td>{proposal.id}</td>
-                  <td>{proposal.title}</td>
-                  <td>{proposal.proposer}</td>
-                  <td>{proposal.status}</td>
-                  <td>{proposal.expiresAt}</td>
-                  <td>
-                    <Button variant="success" onClick={() => handleApprove(proposal.id)}>
-                      Approve
-                    </Button>
-                  </td>
-                  <td>
-                    <Link to={`/${context}/proposal/${proposal.id}`} className="btn btn-info">
-                      Details
-                    </Link>
-                  </td>
+                  <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Proposal ID</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Title</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Proposer</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Status</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Expires At</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Action</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Details</th>
                 </>
               )}
             </tr>
-          ))}
-        </tbody>
-      </Table>
+          </thead>
+          <tbody className="bg-white divide-y divide-gray-200">
+            {proposals.map((proposal, index) => (
+              <tr key={proposal.id} className={`even:bg-gray-50 hover:bg-gray-100`}>
+                {context === 'evm' ? (
+                  <>
+                    <td className="px-6 py-4 whitespace-nowrap">{proposal.hash}</td>
+                    <td className="px-6 py-4 whitespace-nowrap">{proposal.title}</td>
+                    <td className="px-6 py-4 whitespace-nowrap">{proposal.status}</td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <button
+                        className="bg-green-700 text-white px-4 py-2 rounded-lg hover:bg-green-600"
+                        onClick={() => handleApprove(proposal.id)}
+                      >
+                        Approve
+                      </button>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <Link
+                        to={`/${context}/proposal/${proposal.hash}`}
+                        className="bg-gray-400 text-white px-4 py-2 rounded-lg hover:bg-gray-500"
+                      >
+                        Details
+                      </Link>
+                    </td>
+                  </>
+                ) : (
+                  <>
+                    <td className="px-6 py-4 whitespace-nowrap">{proposal.id}</td>
+                    <td className="px-6 py-4 whitespace-nowrap">{proposal.title}</td>
+                    <td className="px-6 py-4 whitespace-nowrap">{proposal.proposer}</td>
+                    <td className="px-6 py-4 whitespace-nowrap">{proposal.status}</td>
+                    <td className="px-6 py-4 whitespace-nowrap">{proposal.expiresAt}</td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <button
+                        className="bg-green-700 text-white px-4 py-2 rounded-lg hover:bg-green-600"
+                        onClick={() => handleApprove(proposal.id)}
+                      >
+                        Approve
+                      </button>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <Link
+                        to={`/${context}/proposal/${proposal.id}`}
+                        className="bg-gray-400 text-white px-4 py-2 rounded-lg hover:bg-gray-500"
+                      >
+                        Details
+                      </Link>
+                    </td>
+                  </>
+                )}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }

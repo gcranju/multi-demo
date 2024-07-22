@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { Card, Button } from 'react-bootstrap';
 import { Base64 } from 'js-base64';
 import { ethers } from 'ethers';
 
@@ -76,47 +75,51 @@ function ProposalDetails() {
   }
 
   return (
-    <div className="container mt-5">
-      <Card className="shadow-lg p-3 mb-5 bg-white rounded">
-        <Card.Body>
-          <Card.Title>Proposal Details</Card.Title>
-          <Card.Text><strong>Proposal ID:</strong> {context === 'cosmos' ? proposal.id : proposal.hash}</Card.Text>
-          <Card.Text><strong>Title:</strong> {proposal.title}</Card.Text>
-          {context === 'cosmos' && <Card.Text><strong>Proposer:</strong> {proposal.proposer}</Card.Text>}
-          <Card.Text><strong>Status:</strong> {proposal.status}</Card.Text>
-          {context === 'cosmos' && <Card.Text><strong>Expires At:</strong> {proposal.expiresAt}</Card.Text>}
-          <hr />
-          <h5>Messages:</h5>
-          {proposal.messages.map((message, index) => (
-            <Card className="mb-3" key={index}>
-              <Card.Body>
-                {context === 'cosmos' ? (
-                  <>
-                    <Card.Text><strong>Contract Address:</strong> {message.wasm.execute.contract_addr}</Card.Text>
-                    <Card.Text><strong>Message:</strong></Card.Text>
-                    <pre>{decodeMessage(message.wasm.execute.msg)}</pre>
-                  </>
-                ) : (
-                  <>
-                    <Card.Text><strong>Data:</strong></Card.Text>
-                    <pre>{decodeAbiMessage(message.data, message.abi)}</pre>
-                  </>
-                )}
-              </Card.Body>
-            </Card>
-          ))}
-          {proposal.status === 'Pending' && (
-            <Button variant="success" onClick={handleApprove} className="float-right">
-              Approve
-            </Button>
-          )}
-          {proposal.status === 'Passed' && (
-            <Button variant="primary" onClick={handleExecute} className="float-right">
-              Execute
-            </Button>
-          )}
-        </Card.Body>
-      </Card>
+    <div className="flex justify-center items-center min-h-screen bg-gray-100">
+      <div className="max-w-3xl w-full bg-white p-8 rounded-lg shadow-lg">
+        <h1 className="text-2xl font-bold mb-4">Proposal Details</h1>
+        <div className="mb-4">
+          <p><strong>Proposal ID:</strong> {context === 'cosmos' ? proposal.id : proposal.hash}</p>
+          <p><strong>Title:</strong> {proposal.title}</p>
+          {context === 'cosmos' && <p><strong>Proposer:</strong> {proposal.proposer}</p>}
+          <p><strong>Status:</strong> {proposal.status}</p>
+          {context === 'cosmos' && <p><strong>Expires At:</strong> {proposal.expiresAt}</p>}
+        </div>
+        <hr className="my-4" />
+        <h5 className="text-xl font-semibold mb-2">Messages:</h5>
+        {proposal.messages.map((message, index) => (
+          <div key={index} className="mb-4 p-4 bg-gray-50 rounded-lg shadow-inner">
+            {context === 'cosmos' ? (
+              <>
+                <p><strong>Contract Address:</strong> {message.wasm.execute.contract_addr}</p>
+                <p><strong>Message:</strong></p>
+                <pre className="bg-gray-200 p-2 rounded">{decodeMessage(message.wasm.execute.msg)}</pre>
+              </>
+            ) : (
+              <>
+                <p><strong>Data:</strong></p>
+                <pre className="bg-gray-200 p-2 rounded">{decodeAbiMessage(message.data, message.abi)}</pre>
+              </>
+            )}
+          </div>
+        ))}
+        {proposal.status === 'Pending' && (
+          <button
+            onClick={handleApprove}
+            className="bg-green-700 text-white px-4 py-2 rounded-lg hover:bg-green-600 float-right ml-2"
+          >
+            Approve
+          </button>
+        )}
+        {proposal.status === 'Passed' && (
+          <button
+            onClick={handleExecute}
+            className="bg-gray-400 text-white px-4 py-2 rounded-lg hover:bg-gray-500 float-right ml-2"
+          >
+            Execute
+          </button>
+        )}
+      </div>
     </div>
   );
 }

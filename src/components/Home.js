@@ -13,25 +13,25 @@ function Home() {
   };
 
   return (
-    <div className="d-flex justify-content-center align-items-center vh-100 bg-light">
+    <div className="flex justify-center items-center min-h-screen bg-gray-100">
       <div className="text-center">
-        <h1 className="mb-5" style={{ fontFamily: "'Comic Sans MS', cursive, sans-serif" }}>MultiChainGov</h1>
-        <button className="btn btn-primary btn-lg mb-3" style={buttonStyle} onClick={handleEvmClick}>Connect EVM Wallet</button>
+        <h1 className="mb-10 text-5xl" style={{ fontFamily: "'Comic Sans MS', cursive, sans-serif" }}>MultiChainGov</h1>
+        <button 
+          className="bg-white text-gray-800 font-bold border-2 border border-gray-800 rounded-full py-3 px-4 mb-5 shadow-md hover:shadow-lg transition-all"
+          onClick={handleEvmClick}
+        >
+          Connect EVM Wallet
+        </button>
         <br />
-        <button className="btn btn-secondary btn-lg" style={buttonStyle} onClick={handleCosmosClick}>Connect Cosmos Wallet</button>
+        <button 
+          className="bg-white text-gray-800 font-bold border-2 border border-gray-800 rounded-full py-3 px-4 shadow-md hover:shadow-lg transition-all"
+          onClick={handleCosmosClick}
+        >
+          Connect Cosmos Wallet
+        </button>
       </div>
     </div>
   );
 }
-
-const buttonStyle = {
-  backgroundColor: 'white',
-  color: '#333',
-  fontWeight: 'bold',
-  border: '2px solid #333',
-  borderRadius: '12px',
-  padding: '10px 20px',
-  boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-};
 
 export default Home;
