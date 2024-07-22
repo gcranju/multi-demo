@@ -13,7 +13,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/cosmos" element={<CosmosPage context="cosmos" />} />
         <Route path="/evm" element={<CosmosPage context="evm" />} />
-        <Route path="/cosmos/proposals/:id" element={<ProposalDetails />} />
+        <Route path="/cosmos/proposal/:id" element={<ProposalDetails />} />
         <Route path="/evm/proposal/:hash" element={<ProposalDetails />} />
       </Routes>
     </Router>
